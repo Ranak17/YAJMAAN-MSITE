@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { CiMenuKebab } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
@@ -11,9 +11,10 @@ export default function Header({ setSelectedButton }) {
     const { isLoggedInUser } = useAuth();
     const handleMenuClick = () => {
         setSelectedButton(ButtonType.Menu);
-        if (isLoggedInUser) {
+        if (!isLoggedInUser) {
             // navigate()
-            navigate('/Darshan'); // Navigate to the SignIn screen
+            console.log("isLoggedInUser : ", isLoggedInUser);
+            navigate('/signin'); // Navigate to the SignIn screen
         }
     };
 

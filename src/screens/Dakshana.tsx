@@ -16,7 +16,7 @@ const Dakshana = ({ hideModal, handleButtonClick, templeData }) => {
     ];
 
     const { userStore } = store;
-
+    console.log("userStore.user.phoneNumber : ", userStore.user.phoneNumber);
     const handlePay = async (price) => {
         let req = {
             amount: parseFloat(price), // Example amount in INR

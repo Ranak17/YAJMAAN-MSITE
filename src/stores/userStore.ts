@@ -76,7 +76,7 @@ export default class UserStore {
             user.is_verified = true;
             this.saveUserProfile(userProfile);
         }
-
+        console.log("user : ", user);
         return user;
     }
 

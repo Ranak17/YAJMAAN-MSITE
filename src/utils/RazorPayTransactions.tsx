@@ -2,10 +2,10 @@ import axios from 'axios';
 import { OrderReq, PaymentResp } from '../models/payment';
 import agent from '../api/agent';
 import { store } from '../stores/store';
-import React from 'react';
+
 import { User } from '../models/user';
 
-export const handlePayment = async (req: OrderReq, user: User): Promise<PaymentResp> => {
+export const handlePayment = async (req: OrderReq): Promise<PaymentResp> => {
     let resp: PaymentResp = {
         amount: '',
         orderID: '',
@@ -22,23 +22,29 @@ export const handlePayment = async (req: OrderReq, user: User): Promise<PaymentR
         resp.orderID = order_id;
         resp.amount = (data.amount / 100)?.toString();
 
-        // Step 2: Initiate Razorpay Checkout
+        console.log("condition : ", `${userStore.user.phoneNumber}` == '1111111111');
         const options = {
-            key: `${user.phoneNumber}` === "1111111111" ? 'rzp_test_kSj5tst4pJx6UE' : 'rzp_live_JJ5eLIfsXfvh37',
-            amount: data.amount,
-            currency: 'INR',
-            name: `${user.displayName}`,
             description: 'Dakshana Payment',
             image: 'https://example.com/your_logo',
-            order_id: order_id,
+            currency: 'INR',
+            // key: 'rzp_test_kSj5tst4pJx6UE', // test key : rzp_test_kSj5tst4pJx6UE
+            // Step 2: Initiate Razorpay Checkout
+            key: `${userStore.user.phoneNumber}` == '1111111111' ? 'rzp_test_kSj5tst4pJx6UE' : 'rzp_live_JJ5eLIfsXfvh37', // live key : rzp_live_JJ5eLIfsXfvh37
+            amount: data.amount, // Amount in smallest currency unit (e.g., paise)
+            order_id: order_id, // Pass the order ID generated in step 1
+            name: `${userStore.user.displayName}`,
             prefill: {
-                name: `${user.displayName}`,
-                email: `${user.email}`,
-                contact: `${user.phoneNumber}`,
+                email: `${userStore.user.email}`,
+                contact: `${userStore.user.phoneNumber}`,
+                name: `${userStore.user.displayName}`,
+                method: 'upi', // Optional prefill method
+                upi: {
+                    vpa: '' // Optional UPI prefill
+                }
             },
-            theme: { color: 'red' },
+            theme: { color: 'red' }
         };
-
+        console.log("options : ", options);
         const rzp = new window.Razorpay(options);
 
         rzp.open();
@@ -55,8 +61,18 @@ export const handlePayment = async (req: OrderReq, user: User): Promise<PaymentR
         });
 
     } catch (error) {
-        console.error('Error:', error);
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            console.error('Error Response:', error.response.data);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('Error Request:', error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error Message:', error.message);
+        }
     }
+
     return resp;
 };
 

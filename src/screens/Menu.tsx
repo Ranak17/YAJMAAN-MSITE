@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import '../styles/globalstyle.css'; // Just import without assigning to a variable
 import { IoClose } from "react-icons/io5";

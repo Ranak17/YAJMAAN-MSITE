@@ -1,4 +1,4 @@
-import React from 'react';
+
 // import './AboutTemple.css'; // Import the CSS file for styling
 import { DarshanVideo } from '../models/darshan';
 import { IoClose } from "react-icons/io5";

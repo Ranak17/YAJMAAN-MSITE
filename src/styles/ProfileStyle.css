@@ -1,0 +1,66 @@
+.profile-background {
+    background-image: url('../../assets/images/rangoli-background.png');
+    background-size: cover;
+    background-color: #160c00;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.profile-container {
+    padding: 20px;
+    padding-top: 60px;
+    /* Adjusted to avoid StatusBar issues */
+    position: relative;
+}
+
+.profile-scroll {
+    padding-bottom: 100px;
+}
+
+.profile-info-text {
+    font-size: 18px;
+    margin: 30px 0;
+    color: white;
+    /* Assuming text color is white */
+}
+
+.delete-account-btn {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: #FA4A29;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.delete-account-btn .delete-account-icon {
+    height: 25px;
+    width: 25px;
+    margin-right: 5px;
+}
+
+.save-changes-btn {
+    position: absolute;
+    bottom: 80px;
+    width: 100%;
+    background-color: #FF6F00;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.logout-btn {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid #FF6F00;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    cursor: pointer;
+}
