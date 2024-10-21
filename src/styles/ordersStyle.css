@@ -1,0 +1,16 @@
+.order-container {
+    overflow-y: scroll;
+    height: 100vh
+}
+
+.order-container::-webkit-scrollbar {
+    width: 8px;
+    /* Change this value to adjust width */
+}
+
+.order-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Scrollbar thumb color */
+    border-radius: 4px;
+    /* Round edges */
+}

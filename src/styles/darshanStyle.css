@@ -1,0 +1,152 @@
+.stories {
+    height: 10vh;
+    background: red;
+}
+
+/* Hide scrollbar while keeping scrolling functional */
+.video-list::-webkit-scrollbar {
+    display: none;
+}
+
+.video-list {
+    height: 100%;
+    -ms-overflow-style: none;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* Style for individual video items */
+.video-item {
+    height: 80vh;
+    /* Each video takes up full screen height */
+    scroll-snap-align: start;
+    /* Snap the video to the start of the viewport when scrolling */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    position: relative;
+    /* To mimic reels style */
+}
+
+/* Style for the video player */
+.video-player {
+    width: 100%;
+    height: 90%;
+    /* Adjust the height of the video */
+    object-fit: cover;
+}
+
+.video-container {
+    height: 100%;
+}
+
+.reel-video {
+    object-fit: cover;
+}
+
+.video-info {
+    /* height: 100%; */
+    width: 100%;
+    height: 6rem;
+    padding: .5rem;
+    background-color: #261602;
+}
+
+.darshan-icon {
+    font-size: 1.8rem;
+}
+
+.filter-tag {
+    background-color: #573408;
+    color: white;
+    font-weight: 700;
+    padding: .6rem;
+    border-radius: 6px;
+}
+
+.temple-name {
+    color: white;
+    font-weight: 700;
+    text-overflow: ellipsis;
+}
+
+.video-info-1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.video-info-2 {
+    color: white;
+    opacity: .5;
+    /* text-align: center; */
+}
+
+.darshan-icon {
+    display: flex;
+    align-items: center;
+}
+
+.modal {
+    position: absolute;
+    background-color: #33210A;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    color: white;
+    /* Or you can set a fixed height */
+    z-index: 1;
+    /* Ensure it stays on top */
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-wrapper {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+}
+
+.modal.hide {
+    /* display: none; */
+    transform: translateY(100%);
+    /* Move the modal out of view to the top */
+
+    /* Hide modal by default */
+}
+
+
+.modal.show {
+    /* display: block; */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.right-icons {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.right-icon img {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+}

@@ -1,0 +1,80 @@
+/* Container for the SignIn screen */
+.signin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: url('../images/background.png') no-repeat center center fixed;
+    /* Add background image */
+    background-size: cover;
+    color: white;
+    padding: 20px;
+}
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+/* Styling the form */
+form {
+    width: 100%;
+    /* Ensures the form takes up 100% of its parent width */
+    /* max-width: 350px; */
+    /* Optional: Set a max width for larger screens */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styling the label */
+label {
+    font-size: 12px;
+    margin-bottom: 8px;
+    color: #FFFFFF;
+    opacity: 0.8;
+    align-self: flex-start;
+    /* Aligns the label to the left */
+}
+
+/* Styling the input */
+input {
+    width: 100%;
+    /* Makes the input take 100% width of the form */
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Translucent background */
+    color: white;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    /* Ensures padding is included in width calculation */
+}
+
+/* Remove the default input outline */
+input:focus {
+    outline: none;
+    border-color: orange;
+}
+
+
+.custom-button:hover {
+    background-color: #ff5722;
+}
+
+
+.signIn-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}

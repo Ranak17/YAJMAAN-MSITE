@@ -1,0 +1,52 @@
+.otp-container {
+    text-align: center;
+    margin-top: 2rem;
+    color: white;
+    padding: 40px 20px;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.otp-heading {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.otp-number {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.otp-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.otp-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    /* margin-bottom: 20px; */
+}
+
+.otp-input {
+    text-align: center;
+    margin: .5rem;
+    font-size: 24px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+}
+
+.otp-input:focus {
+    outline: none;
+    border: 2px solid #ff5722;
+}
+
+.otp-timer {
+    margin-top: 10px;
+    color: #ff5722;
+    font-size: 14px;
+}

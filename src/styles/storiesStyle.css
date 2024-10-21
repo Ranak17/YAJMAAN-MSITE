@@ -1,0 +1,83 @@
+.screen-container {
+    overflow: hidden;
+    /* Prevent any overflow from expanding the container */
+    display: flex;
+    flex-direction: column;
+    /* Stack content vertically */
+}
+
+.stories-container {
+    display: flex;
+    gap: 10px;
+    padding: 0 1rem;
+    overflow-x: auto;
+    /* Enable horizontal scrolling */
+    /* padding: 10px; */
+    white-space: nowrap;
+    scrollbar-width: none;
+    /* Make the scrollbar thin in Firefox */
+    scrollbar-color: #888 transparent;
+    /* Prevent wrapping of stories */
+}
+
+/* Customize scrollbar for WebKit browsers (Chrome, Safari) */
+.stories-container::-webkit-scrollbar {
+    height: 5px;
+    display: none;
+    /* Thin scrollbar */
+}
+
+.stories-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.stories-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.story-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.story-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: border 0.3s ease;
+    /* No border by default */
+}
+
+.story-circle.selected {
+    border: 3px solid #FA4A29;
+    /* Highlighted border for selected story */
+}
+
+.story-image {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.story-filter {
+    /* margin-top: 8px; */
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.filter-selected {
+    font-weight: bold;
+    opacity: 1;
+    color: #FA4A29;
+}
