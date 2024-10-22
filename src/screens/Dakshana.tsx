@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from 'react-router-dom';  // Hook for navigation
 import '../styles/DakshanaStyle.css';  // Assuming you're using CSS for styling instead of React Native's StyleSheet
 
@@ -6,9 +5,13 @@ import { store } from '../stores/store';
 import { ButtonType } from "../../screens/Darshan";
 import { handlePayment } from '../utils/RazorPayTransactions';
 import { IoClose } from "react-icons/io5";
+import { useAuth } from "../utils/AuthProvider";
+import { buttonStore } from '../stores/ButtonStore';
 
-const Dakshana = ({ hideModal, handleButtonClick, templeData }) => {
+const Dakshana = ({ handleButtonClick, templeData }) => {
     const navigate = useNavigate();  // Use hook to access navigation
+    const { isLoggedInUser } = useAuth();
+
     const dakshanaList = [
         { price: 101 },
         { price: 201 },
@@ -30,7 +33,7 @@ const Dakshana = ({ hideModal, handleButtonClick, templeData }) => {
         };
 
         let paymentResp = await handlePayment(req, navigate, userStore.user);
-        hideModal();
+        buttonStore.setSelectedButton(null);
         navigate('/darshan');
     };
 
@@ -42,7 +45,7 @@ const Dakshana = ({ hideModal, handleButtonClick, templeData }) => {
                         <img src="./images/dakshana2.png" alt="Dakshana Icon" className="icon-image" />
                     </div>
                     <span className="header-text">Dakshana</span>
-                    <IoClose onClick={hideModal} style={{
+                    <IoClose onClick={() => buttonStore.setSelectedButton(null)} style={{
                         color: 'white',
                         fontSize: '1.2rem',
                         cursor: 'pointer',
@@ -58,7 +61,10 @@ const Dakshana = ({ hideModal, handleButtonClick, templeData }) => {
             <div className="price-list">
                 {dakshanaList.map((item, index) => (
                     <div className="price-list-item" key={index}>
-                        <button className="price-button" onClick={() => handlePay(item.price)}>
+                        <button className="price-button" onClick={() => {
+                            handlePay(item.price)
+                        }}
+                        >
                             ₹{item.price}
                         </button>
                     </div>

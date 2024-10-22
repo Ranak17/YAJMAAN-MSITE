@@ -4,8 +4,9 @@ import '../styles/globalstyle.css'; // Just import without assigning to a variab
 import { IoClose } from "react-icons/io5";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { RiWhatsappFill } from "react-icons/ri";
+import { buttonStore } from '../stores/ButtonStore';
 
-const Menu = ({ hideModal }) => {
+const Menu = () => {
     const navigate = useNavigate();
 
     const handleWhatsAppClick = () => {
@@ -29,7 +30,7 @@ const Menu = ({ hideModal }) => {
             <div className="header dfac">
                 <span>Menu</span>
                 <div style={{ position: 'absolute', right: 20 }}>
-                    <IoClose onClick={hideModal} style={{ color: 'white', fontSize: '1.2rem', cursor: 'pointer' }} />
+                    <IoClose onClick={() => buttonStore.setSelectedButton(null)} style={{ color: 'white', fontSize: '1.2rem', cursor: 'pointer' }} />
                 </div>
             </div>
 
@@ -39,7 +40,7 @@ const Menu = ({ hideModal }) => {
                         <div
                             key={index}
                             className="menu-item"
-                            onClick={() => { navigate(item.navigation); hideModal(); }}
+                            onClick={() => { navigate(item.navigation); }}
                         >
                             <img
                                 src={item.image}
@@ -49,7 +50,7 @@ const Menu = ({ hideModal }) => {
                             <span className="menu-text">{item.text}</span>
                             <RiArrowRightSLine
                                 style={{ position: 'absolute', right: '20px', cursor: 'pointer' }}
-                                onClick={hideModal}
+                                onClick={() => buttonStore.setSelectedButton(null)}
                             />
                         </div>
                     ))}

@@ -96,6 +96,7 @@
 
 .modal {
     position: absolute;
+    font-size: 1.2rem;
     background-color: #33210A;
     bottom: 0;
     width: 100%;
@@ -107,7 +108,7 @@
     transform: translateY(100%);
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 
-    padding: 20px;
+    padding: .7rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

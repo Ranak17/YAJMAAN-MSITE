@@ -4,15 +4,15 @@ import { CiMenuKebab } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../styles/globalstyle.css';
 import { useAuth } from '../utils/AuthProvider';
-import { ButtonType } from '../screens/Darshan';
+import { ButtonType, buttonStore } from "../stores/ButtonStore";
 
-export default function Header({ setSelectedButton }) {
+export default function Header() {
     const navigate = useNavigate(); // Initialize the navigation hook
     const { isLoggedInUser } = useAuth();
     const handleMenuClick = () => {
-        setSelectedButton(ButtonType.Menu);
+        console.log("buttonStore.selectedButton : ", buttonStore.selectedButton)
+        buttonStore.setSelectedButton(ButtonType.Menu);
         if (!isLoggedInUser) {
-            // navigate()
             console.log("isLoggedInUser : ", isLoggedInUser);
             navigate('/signin'); // Navigate to the SignIn screen
         }

@@ -20,6 +20,11 @@
     align-items: center;
 }
 
+.dfjcsb {
+    display: flex;
+    justify-content: space-between;
+}
+
 .msite-container {
     background-color: #261602;
     height: 100vh;
@@ -113,10 +118,15 @@
 .header {
     display: flex;
     justify-content: space-between;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: white;
     padding: 1rem;
     height: 10vh;
+}
+
+.menu-popup-header {
+    font-size: 1.6rem;
+    padding: .3rem .7rem;
 }
 
 /* .header-text {
@@ -128,7 +138,7 @@
     cursor: pointer;
     /* background: rebeccapurple; */
     align-items: center;
-    padding: 1rem 0;
+    padding: .8rem 0;
 }
 
 

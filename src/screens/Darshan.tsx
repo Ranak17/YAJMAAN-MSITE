@@ -8,26 +8,33 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 import Menu from './Menu';
 import AboutTemple from './AboutTemple';
 import Dakshana from './Dakshana';
+import { ButtonType, buttonStore } from '../stores/ButtonStore';
+import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../utils/AuthProvider';
 
-export enum ButtonType {
-    Prashad = 'Prashad',
-    AboutTemple = 'AboutTemple',
-    Dakshana = 'Dakshana',
-    Menu = 'Menu',
-}
-
-export default function Darshan() {
+const Darshan = observer(() => {
     const [videos, setVideos] = useState([]);
-    const [selectedButton, setSelectedButton] = useState<ButtonType | null>(null);
     const [modalData, setModalData] = useState<any>(null); // Update type based on modalData structure
     const [isLogOutClicked, setIsLogOutClicked] = useState<boolean>(false);
-    const [isLoggedInUser, setIsLoggedInUser] = useState<boolean>(true);
     const [currentAudio, setCurrentAudio] = useState(null); // Track the current audio
     const [isPlaying, setIsPlaying] = useState(false); // Track if the audio is playing
     const bellAudioRef = useRef(new Audio('./audios/temple_bell.mp3')); // Reference for bell audio
     const shankhAudioRef = useRef(new Audio('./audios/shankh-sound.mp3')); // Reference for shankh audio
-
     // Function to toggle audio
+    const navigate = useNavigate(); // Initialize the navigation hook
+    const { isLoggedInUser } = useAuth();
+    const handleDakshanaClick = () => {
+        console.log("buttonStore.selectedButton : ", buttonStore.selectedButton)
+        buttonStore.setSelectedButton(ButtonType.Dakshana);
+        if (!isLoggedInUser) {
+            console.log("isLoggedInUser : ", isLoggedInUser);
+            navigate('/signin'); // Navigate to the SignIn screen
+        }
+    };
+
+
+
     const handleAudioClick = (audioRef, audioType) => {
         // If the same audio is clicked, toggle play/pause
         if (currentAudio === audioType) {
@@ -54,12 +61,9 @@ export default function Darshan() {
             setIsPlaying(true);
         }
     };
-    const hideModal = () => {
-        setSelectedButton(null);
-    };
 
     const handleButtonClick = (button: ButtonType) => {
-        setSelectedButton(button);
+        buttonStore.setSelectedButton(button);
     };
     const [selectedStory, setSelectedStory] = useState('all'); // Default to 'all'
 
@@ -94,7 +98,6 @@ export default function Darshan() {
             console.error('Error fetching videos:', error);
         }
     };
-
     // useEffect to fetch videos on initial render and when selectedStory changes
     useEffect(() => {
         console.log("selectedStory : ", selectedStory);
@@ -104,10 +107,9 @@ export default function Darshan() {
     const handleStoryChange = (filter) => {
         setSelectedStory(filter);
     };
-    console.log("selectedButton : ", selectedButton);
     return (
         <div style={{ backgroundColor: '#261602' }}>
-            <Header setSelectedButton={setSelectedButton} />
+            <Header setSelectedButton={buttonStore.setSelectedButton} />
             <Stories onStoryChange={handleStoryChange} /> {/* Pass function to Stories */}
             <div className="modal-wrapper">
 
@@ -126,7 +128,7 @@ export default function Darshan() {
                                             color="white"
                                             onClick={() => {
                                                 setModalData(video);
-                                                setSelectedButton(ButtonType.AboutTemple);
+                                                buttonStore.setSelectedButton(ButtonType.AboutTemple);
                                             }}
                                             style={{ cursor: 'pointer' }}
                                         /> &nbsp;
@@ -159,7 +161,8 @@ export default function Darshan() {
                                     />
                                 </div>
                                 <div className="right-icon" onClick={() => {
-                                    setSelectedButton(ButtonType.Dakshana);
+                                    buttonStore.setSelectedButton(ButtonType.Dakshana);
+                                    handleDakshanaClick();
                                     setModalData(video);
                                 }}>
                                     <img src="./images/dakshana.png" alt="dakshana" />
@@ -169,29 +172,29 @@ export default function Darshan() {
                     ))}
                 </div>
 
-                <div className={`modal ${selectedButton != null && selectedButton === ButtonType.Menu ? 'show' : 'hide'}`}>
-                    <Menu
-                        hideModal={hideModal}
-                        showModal={() => setSelectedButton(ButtonType.Menu)}
-                        handleButtonClick={handleButtonClick}
-                        setIsLogOutClicked={setIsLogOutClicked}
-                    />
+                <div className={`modal ${buttonStore.selectedButton != null && buttonStore.selectedButton === ButtonType.Menu ? 'show' : 'hide'}`}>
+                    {isLoggedInUser && (
+                        <Menu />)}
                 </div>
-                <div className={`modal ${selectedButton != null && selectedButton === ButtonType.Dakshana ? 'show' : 'hide'}`}>
-                    <Dakshana
-                        hideModal={hideModal}
-                        templeData={modalData}
-                        handleButtonClick={handleButtonClick}
-                    />
+                <div className={`modal ${buttonStore.selectedButton != null && buttonStore.selectedButton === ButtonType.Dakshana ? 'show' : 'hide'}`}>
+                    {isLoggedInUser && (
+                        <Dakshana
+                            templeData={modalData}
+                            handleButtonClick={handleButtonClick}
+                        />
+                    )}
                 </div>
-                <div className={`modal ${selectedButton != null && selectedButton === ButtonType.AboutTemple ? 'show' : 'hide'}`}>
-                    <AboutTemple
-                        hideModal={hideModal}
-                        templeData={modalData}
-                        handleButtonClick={handleButtonClick}
-                    />
+                <div className={`modal ${buttonStore.selectedButton != null && buttonStore.selectedButton === ButtonType.AboutTemple ? 'show' : 'hide'}`}>
+                    {isLoggedInUser && (
+                        <AboutTemple
+                            templeData={modalData}
+                            handleButtonClick={handleButtonClick}
+                        />)}
                 </div>
             </div>
         </div>
-    );
-}
+    )
+})
+
+
+export default Darshan;

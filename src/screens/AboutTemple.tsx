@@ -3,13 +3,12 @@
 import { DarshanVideo } from '../models/darshan';
 import { IoClose } from "react-icons/io5";
 import '../styles/aboutTempleStyle.css'
+import { buttonStore } from '../stores/ButtonStore';
 interface AboutTempleProps {
     templeData: DarshanVideo;
-    hideModal: () => void;
-    handleButtonClick: (buttonType: string) => void;
 }
 
-const AboutTemple: React.FC<AboutTempleProps> = ({ templeData, hideModal }) => {
+const AboutTemple: React.FC<AboutTempleProps> = ({ templeData }) => {
     const content = [
         {
             headingText: 'Temple Name',
@@ -30,7 +29,7 @@ const AboutTemple: React.FC<AboutTempleProps> = ({ templeData, hideModal }) => {
             <div className="dfac">
                 <span>About Temple</span>
                 <div style={{ position: 'absolute', right: 20 }}>
-                    <IoClose onClick={hideModal} style={{ color: 'white', fontSize: '1.2rem', cursor: 'pointer' }} />
+                    <IoClose onClick={() => buttonStore.setSelectedButton(null)} style={{ color: 'white', fontSize: '1.2rem', cursor: 'pointer' }} />
                 </div>
             </div>
             <div className="content-scroll">
