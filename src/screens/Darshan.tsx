@@ -182,6 +182,7 @@ const Darshan = observer(() => {
                                 mute={mute}
                                 play={play}
                                 togglePlay={togglePlay} />
+                            <div className='' ></div>
                             <div className="video-info">
                                 <div className="video-info-1">
                                     <div className='video-title'>

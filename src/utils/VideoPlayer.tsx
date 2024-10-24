@@ -59,18 +59,24 @@ function VideoPlayer({ videoUrl, mute }) {
     }, []);
 
     return (
-        <div className="video-container" onClick={togglePlay}>
-            <video
-                ref={videoRef}
-                src={videoUrl}
-                controls={false}
-                muted={mute}
-                loop
-                className="reel-video"
-                style={{ width: '100%', height: '100%' }}
-            />
+        <>
+            <div className="video-container" onClick={togglePlay}>
+                <video
+                    ref={videoRef}
+                    src={videoUrl}
+                    controls={false}
+                    muted={mute}
+                    loop
+                    className="reel-video"
+                    style={{ width: '100%', height: '100%' }}
+                />
 
-        </div>
+            </div>
+            {/* Show play icon when paused */}
+            <div id="play-video-icon">
+                {!play && <IoPlayCircleOutline />}
+            </div>
+        </>
     );
 }
 
