@@ -75,8 +75,8 @@ const Darshan = observer(() => {
     const fetchVideos = async (filter) => {
         console.log("fetching stories with filter : ", filter);
         try {
-            // const response = await fetch('http://13.53.229.65:3000/api/darshan/videos', {   //http
-            const response = await fetch('https://yajmaan.in:4433/api/darshan/videos', {   //https
+            const response = await fetch('http://13.53.229.65:3000/api/darshan/videos', {   //http
+                // const response = await fetch('https://yajmaan.in:4433/api/darshan/videos', {   //https
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -180,7 +180,6 @@ const Darshan = observer(() => {
                             <VideoPlayer
                                 videoUrl={video.videoUrl}
                                 mute={mute}
-                                play={play}
                                 togglePlay={togglePlay} />
                             <div className='' ></div>
                             <div className="video-info">
