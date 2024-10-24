@@ -177,7 +177,11 @@ const Darshan = observer(() => {
                 <div className="video-list">
                     {videos.map((video, index) => (
                         <div key={index} className="video-item">
-                            <VideoPlayer videoUrl={video.videoUrl} mute={mute} play={play} togglePlay={togglePlay} />
+                            <VideoPlayer
+                                videoUrl={video.videoUrl}
+                                mute={mute}
+                                play={play}
+                                togglePlay={togglePlay} />
                             <div className="video-info">
                                 <div className="video-info-1">
                                     <div className='video-title'>

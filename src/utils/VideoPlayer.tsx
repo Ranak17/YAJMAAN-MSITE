@@ -2,8 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import '../styles/globalstyle.css';
 import { IoPlayCircleOutline } from 'react-icons/io5';
 
-function VideoPlayer({ videoUrl, mute, play, togglePlay }) {
+function VideoPlayer({ videoUrl, mute }) {
     const videoRef = useRef(null);
+    const [play, setPlay] = useState<boolean>(true); // Video plays by default
+
+    const togglePlay = () => {
+        setPlay(prevPlay => !prevPlay); // Toggle between play and pause
+    };
 
     useEffect(() => {
         if (videoRef.current) {

@@ -8,8 +8,8 @@ import { Address } from "../models/address";
 //artificail latency
 
 
-// axios.defaults.baseURL = 'http://13.53.229.65:3000/api/'; //http
-axios.defaults.baseURL = 'https://yajmaan.in:4433/api/'; //https
+axios.defaults.baseURL = 'http://13.53.229.65:3000/api/'; //http
+// axios.defaults.baseURL = 'https://yajmaan.in:4433/api/'; //https
 
 // axios.interceptors.request.use(config => {
 //     const token = store.commonStore.token;
