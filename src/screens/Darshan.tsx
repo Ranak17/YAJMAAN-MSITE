@@ -75,7 +75,8 @@ const Darshan = observer(() => {
     const fetchVideos = async (filter) => {
         console.log("fetching stories with filter : ", filter);
         try {
-            const response = await fetch('http://13.53.229.65:3000/api/darshan/videos', {
+            //const response = await fetch('http://13.53.229.65:3000/api/darshan/videos', {   //http
+            const response = await fetch('http://yajmaan.in:4433/api/darshan/videos', {   //https
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
