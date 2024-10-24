@@ -8,7 +8,7 @@ import { Address } from "../models/address";
 //artificail latency
 
 
-axios.defaults.baseURL = 'https://yajmaan.in:4433/api/';
+axios.defaults.baseURL = 'http://13.53.229.65:3000/api/';
 
 // axios.interceptors.request.use(config => {
 //     const token = store.commonStore.token;
@@ -115,7 +115,8 @@ const requests = {
 const Account = {
     loginSendOTP: (phoneNumber: string) => requests.post<any>('login/send-otp', { phoneNumber }),
     loginVerifyOTP: (cred: UserLoginValues) => requests.post<any>('login/verify-otp', cred),
-    deleteAccount: (userID: string | number) => requests.del<any>(`login/delete/${userID}`)
+    deleteAccount: (userID: string | number) => requests.del<any>(`login/delete/${userID}`),
+    updateUserDetails: (user: User) => requests.post<any>('/users/update', user)
 }
 
 const Darshan = {

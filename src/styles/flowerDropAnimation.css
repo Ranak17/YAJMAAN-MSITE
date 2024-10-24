@@ -1,0 +1,45 @@
+.flower-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    /* Allow clicks to pass through */
+    z-index: 1;
+    /* Ensure it's on top of other content */
+}
+
+.flower {
+    position: absolute;
+    width: 40px;
+    /* Flower width */
+    height: 40px;
+    /* Flower height */
+    animation: fall 5s linear infinite;
+    /* Only falling animation */
+    opacity: 0;
+    /* Initially invisible */
+}
+
+/* Falling animation */
+@keyframes fall {
+    0% {
+        transform: translateY(-100px);
+        /* Start above the viewport */
+        opacity: 0;
+        /* Fully transparent */
+    }
+
+    10% {
+        opacity: 1;
+        /* Start becoming visible */
+    }
+
+    100% {
+        transform: translateY(100vh);
+        /* End at the bottom of the viewport */
+        /* opacity: 0; */
+        /* Fade out */
+    }
+}

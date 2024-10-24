@@ -10,7 +10,8 @@ export default class UserStore {
         name: '',
         phoneNumber: null,
         displayName: '',
-        username: ''
+        username: '',
+        fullName: ''
     };
 
     constructor() {
@@ -50,7 +51,9 @@ export default class UserStore {
             phoneNumber: 0,
             userId: '',
             username: '',
-            is_verified: false
+            is_verified: false,
+            fullName: '',
+            first_name: ''
         };
 
         if (creds.phoneNumber !== "1111111111") {
@@ -60,6 +63,7 @@ export default class UserStore {
                 const userProfile: User = {
                     phoneNumber: user?.mobile_number,
                     displayName: user?.username,
+                    fullName: user?.first_name,
                     username: user?.username,
                     email: user?.email,
                     userId: user?.id
@@ -70,6 +74,7 @@ export default class UserStore {
             let userProfile: User = {
                 phoneNumber: creds.phoneNumber,
                 name: "Testing name",
+                fullName: 'Testing full name',
                 displayName: 'Testing name',
                 userId: 1
             };
@@ -87,6 +92,18 @@ export default class UserStore {
         await this.deleteAllOrders();    // Delete all orders
     }
 
+
+    updateUserProfile = async (user: User) => {
+        console.log("Api hit for updateUserDetails")
+        const resp = await agent.Account.updateUserDetails(user);
+        console.log("--------------A----------------")
+        if (resp != null && resp.message == "User details updates successfully") {
+            console.log("--------------B----------------")
+            this.user.fullName = resp.user.first_name;
+        }
+        console.log("response of updateUserDetails api : ", resp);
+        return resp;
+    }
     // Save user profile to localStorage (Web version)
     saveUserProfile = (profile: User) => {
         try {

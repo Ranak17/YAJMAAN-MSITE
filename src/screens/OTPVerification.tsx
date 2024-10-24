@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/otpVerificationStyle.css'; // Assume you create this CSS file for styles
 import { useAuth } from '../utils/AuthProvider';
 import { store } from '../stores/store';
-import { useLocation, useNavigation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function OTPVerification() {
     const [otp, setOtp] = useState(new Array(6).fill('')); // Array to hold 6 digits of OTP
@@ -14,8 +13,8 @@ export default function OTPVerification() {
     const { isLoggedInUser, setIsLoggedInUser } = useAuth();
     const location = useLocation();
     const { phoneNumber } = location.state || {}; // Extract phoneNumber from location.state
-
     const navigation = useNavigate();
+
     useEffect(() => {
         if (timeLeft > 0) {
             const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
@@ -26,6 +25,7 @@ export default function OTPVerification() {
     const formatTime = (time) => {
         return time < 10 ? `0${time}` : time; // Format time with leading zero if needed
     };
+
     const handleChange = (element, index) => {
         if (isNaN(element.value)) return; // Only allow numbers
 
@@ -46,6 +46,7 @@ export default function OTPVerification() {
             }
         }
     };
+
     const verifyOTP = async (e) => {
         e.preventDefault();
         const enteredOtp = otp.join(''); // Combine OTP digits
@@ -54,9 +55,8 @@ export default function OTPVerification() {
             otp: enteredOtp,
         };
         console.log('postData:', postData); // Handle OTP verification logic here
-        console.log('enteredOtp.length == 6:', enteredOtp.length == 6); // Handle OTP verification logic here
 
-        if (enteredOtp.length == 6) {
+        if (enteredOtp.length === 6) {
             setLoading(true); // Start loading
 
             try {
@@ -79,7 +79,6 @@ export default function OTPVerification() {
         }
     };
 
-
     return (
         <div className="otp-container">
             <div className="otp-heading">Enter OTP sent on</div>
@@ -90,7 +89,7 @@ export default function OTPVerification() {
                     {otp.map((data, index) => (
                         <input
                             key={index}
-                            type="text"
+                            type="tel" // Change from "text" to "tel"
                             maxLength="1"
                             className="otp-input"
                             value={data}
@@ -103,7 +102,7 @@ export default function OTPVerification() {
                 <button type="submit" className="custom-button">Verify</button>
                 <div style={{ margin: '1rem' }}>
                     {timeLeft > 0 ? (
-                        <span >Didn't receive OTP? Wait for {formatTime(timeLeft)}s</span>
+                        <span>Didn't receive OTP? Wait for {formatTime(timeLeft)}s</span>
                     ) : (
                         <>
                             <span>Didn't receive OTP? </span>

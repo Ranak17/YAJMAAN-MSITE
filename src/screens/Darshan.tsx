@@ -12,7 +12,11 @@ import { ButtonType, buttonStore } from '../stores/ButtonStore';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthProvider';
-
+import FlowerDropAnimation from '../components/FlowerDropAnimation';
+import { IoVolumeMuteOutline } from "react-icons/io5";
+import { GoUnmute } from "react-icons/go";
+import { FaCirclePlay } from "react-icons/fa6";
+import { IoPlayCircleOutline } from "react-icons/io5";
 const Darshan = observer(() => {
     const [videos, setVideos] = useState([]);
     const [modalData, setModalData] = useState<any>(null); // Update type based on modalData structure
@@ -71,14 +75,14 @@ const Darshan = observer(() => {
     const fetchVideos = async (filter) => {
         console.log("fetching stories with filter : ", filter);
         try {
-            const response = await fetch('https://yajmaan.in:4433/api/darshan/videos', {
+            const response = await fetch('http://13.53.229.65:3000/api/darshan/videos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     filter,   // Use the filter provided
-                    limit: 5,
+                    limit: 50,
                     offset: 1
                 })
             });
@@ -107,19 +111,69 @@ const Darshan = observer(() => {
     const handleStoryChange = (filter) => {
         setSelectedStory(filter);
     };
+    // Ref to control FlowerDropAnimation
+    const flowerDropRef = useRef(null);
+    const [visible, setVisible] = useState(false);
+    const startAnimation = () => {
+        setVisible(true);
+        if (flowerDropRef.current) {
+            flowerDropRef.current.startFlowerDrop();
+        }
+
+        // Hide the animation after 6 seconds
+        setTimeout(() => {
+            setVisible(!visible);
+        }, 8000); // 6000 ms = 6 seconds
+    };
+
+    useEffect(() => {
+        if (visible) {
+            startAnimation(); // Start the animation when visible becomes true
+        }
+    }, [visible]);
+    const shareMessage = "Check out yajmaan.in!"; // Your message
+    const url = "https://yajmaan.in"; // The URL you want to share
+
+    const handleShareClick = () => {
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}%20${encodeURIComponent(url)}`;
+        window.open(whatsappUrl, '_blank'); // Open WhatsApp sharing link in a new tab
+    };
+
+    function getFirstAartiTimeWithEmoji(templeData) {
+        if (templeData.aarti && templeData.aarti.length > 0) {
+            const firstAarti = templeData.aarti[0]; // Fetch the first aarti
+            const { aartiName, time } = firstAarti;
+            const formatTimeToAmPm = (time) => {
+                const [hours, minutes] = time.split(":");
+                const formattedHours = hours % 12 || 12; // Convert 24-hour to 12-hour format
+                const amPm = hours >= 12 ? "PM" : "AM";
+                return `${formattedHours}:${minutes} ${amPm}`;
+            };
+            const emoji = aartiName.includes("Morning") ? '🌞️' : '🌅';
+            const formattedTime = formatTimeToAmPm(time);
+            return `${emoji} ${aartiName} (${formattedTime})`;
+        } else {
+            return 'No aarti time available';
+        }
+    }
+
+    const [mute, setMute] = useState<boolean>(true);
+
+    console.log("mute : ", mute)
     return (
         <div style={{ backgroundColor: '#261602' }}>
-            <Header setSelectedButton={buttonStore.setSelectedButton} />
+            <Header />
             <Stories onStoryChange={handleStoryChange} /> {/* Pass function to Stories */}
             <div className="modal-wrapper">
+                <FlowerDropAnimation ref={flowerDropRef} visible={visible} />
 
                 <div className="video-list">
-                    {videos.map((video) => (
-                        <div key={video.videoId} className="video-item">
-                            <VideoPlayer videoUrl={video.videoUrl} />
+                    {videos.map((video, index) => (
+                        <div key={index} className="video-item">
+                            <VideoPlayer videoUrl={video.videoUrl} mute={mute} />
                             <div className="video-info">
                                 <div className="video-info-1">
-                                    <div>
+                                    <div className='video-title'>
                                         <span className="temple-name">{video.aboutTemple.name}</span>&nbsp;
                                         <span className="filter-tag">{video.filter}</span>
                                     </div>
@@ -132,13 +186,20 @@ const Darshan = observer(() => {
                                             }}
                                             style={{ cursor: 'pointer' }}
                                         /> &nbsp;
-                                        <RiWhatsappFill color="green" style={{ cursor: 'pointer' }} />
+                                        <RiWhatsappFill color="green" style={{ cursor: 'pointer' }} onClick={handleShareClick} />
                                         &nbsp;&nbsp;
                                     </div>
                                 </div>
                                 <div className="video-info-2">
-                                    undefined | {video.aboutTemple.location.state} | {video.videoViewCount}
+                                    {getFirstAartiTimeWithEmoji(video)} | {video.aboutTemple.location.state} | {video.videoViewCount}
                                 </div>
+                            </div>
+                            <div id='mute-unmute'>
+                                {mute
+                                    ? <IoVolumeMuteOutline onClick={() => setMute(false)} />
+                                    : <GoUnmute onClick={() => setMute(true)} />
+                                }
+
                             </div>
                             <div className="right-icons">
                                 <div className="right-icon">
@@ -150,7 +211,10 @@ const Darshan = observer(() => {
                                     />
                                 </div>
                                 <div className="right-icon">
-                                    <img src="./images/flower.png" alt="flower" />
+                                    <img src="./images/flower.png"
+                                        alt="flower"
+                                        onClick={() => setVisible(!visible)}
+                                    />
                                 </div>
                                 <div className="right-icon">
                                     <img
@@ -168,6 +232,7 @@ const Darshan = observer(() => {
                                     <img src="./images/dakshana.png" alt="dakshana" />
                                 </div>
                             </div>
+
                         </div>
                     ))}
                 </div>
@@ -185,10 +250,9 @@ const Darshan = observer(() => {
                     )}
                 </div>
                 <div className={`modal ${buttonStore.selectedButton != null && buttonStore.selectedButton === ButtonType.AboutTemple ? 'show' : 'hide'}`}>
-                    {isLoggedInUser && (
-                        <AboutTemple
-                            templeData={modalData}
-                        />)}
+                    <AboutTemple
+                        templeData={modalData}
+                    />
                 </div>
             </div>
         </div>

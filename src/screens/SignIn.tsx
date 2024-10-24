@@ -4,7 +4,7 @@ import '../styles/globalstyle.css'
 import { useAuth } from '../utils/AuthProvider';
 import { store } from '../stores/store';
 import { useNavigate } from 'react-router-dom';
-
+import rangoliBackground from '../assets/images/rangoli-background.png'
 export default function SignIn() {
     const [phoneNumber, setPhoneNumber] = useState('');
 
@@ -22,7 +22,7 @@ export default function SignIn() {
     };
 
     return (
-        <div className="signin-container">
+        <div className="signin-container" style={{ backgroundImage: `url(${rangoliBackground})` }}>
             <div className='signIn-text'>Enter your mobile number to get started</div>
             <form onSubmit={handleSubmit}>
                 <input

@@ -70,7 +70,9 @@ const Dakshana = ({ handleButtonClick, templeData }) => {
                     </div>
                 ))}
             </div>
-            <img src="./images/partner-certificate.png" alt="Partner Certificate" className="certificate-image" />
+            <div className='dfjc'>
+                <img src="./images/partner-certificate.png" alt="Partner Certificate" className="certificate-image" />
+            </div>
             <p className="partner-text">
                 Official Partner of <span className="highlight-text">{templeData?.aboutTemple?.name}</span>
             </p>

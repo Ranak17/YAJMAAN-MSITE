@@ -43,7 +43,7 @@
 }
 
 .video-container {
-    height: 100%;
+    height: 85%;
 }
 
 .reel-video {
@@ -53,9 +53,28 @@
 .video-info {
     /* height: 100%; */
     width: 100%;
-    height: 6rem;
+    height: 15%;
     padding: .5rem;
     background-color: #261602;
+}
+
+#mute-unmute {
+    position: absolute;
+    bottom: 11rem;
+    left: 1rem;
+    width: 100%;
+    /* height: 4rem; */
+    /* background: green; */
+    font-size: 1.5rem;
+    color: white;
+}
+
+.video-title {
+    width: 80%;
+    white-space: nowrap;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 .darshan-icon {
@@ -68,6 +87,16 @@
     font-weight: 700;
     padding: .6rem;
     border-radius: 6px;
+}
+
+#play-video-icon {
+    width: 100%;
+    position: absolute;
+    font-size: 4rem;
+    color: white;
+    top: 38%;
+    opacity: .8;
+    text-align: center;
 }
 
 .temple-name {
@@ -100,18 +129,22 @@
     background-color: #33210A;
     bottom: 0;
     width: 100%;
-    height: auto;
+    max-height: 57%;
     color: white;
-    /* Or you can set a fixed height */
     z-index: 1;
-    /* Ensure it stays on top */
     transform: translateY(100%);
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-
     padding: .7rem;
-    border-radius: 10px;
+    border-radius: 1.2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: scroll;
 }
+
+.modal::-webkit-scrollbar {
+    display: none;
+}
+
+
 
 .modal-wrapper {
     position: relative;
@@ -129,7 +162,6 @@
 
 
 .modal.show {
-    /* display: block; */
     opacity: 1;
     transform: translateY(0);
 }

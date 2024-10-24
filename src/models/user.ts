@@ -7,6 +7,8 @@ export interface User {
     mobile_number: string | number | null;
     username: string | null;
     is_verified: boolean | null;
+    fullName: string,
+    first_name: string
 }
 
 export interface UserLoginValues {

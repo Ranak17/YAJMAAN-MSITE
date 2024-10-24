@@ -6,40 +6,55 @@ import { useAuth } from "../utils/AuthProvider";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import '../styles/ProfileStyle.css'; // Importing the CSS file
 import { buttonStore, ButtonType } from "../stores/ButtonStore";
-
 import { IoClose } from "react-icons/io5";
 import { observer } from "mobx-react-lite";
-
+import { ActivityIndicator } from "react-native-web";
+import rangoliBackground from '../assets/images/rangoli-background.png'
 const Profile = observer(() => {
-    console.log("buttonStore.selectedButton : ", buttonStore.selectedButton)
     const navigate = useNavigate(); // React router's useNavigate hook
     const { userStore } = store;
     const [user, setUser] = useState(userStore.user);
-    const { setIsLoggedInUser, setIsLogOutClicked } = useAuth();
+    console.log("user in profile.tsx : ", userStore.user);
+    const { setIsLoggedInUser } = useAuth();
 
     const updateUserProfile = (fieldName, value) => {
-        setUser(prevState => ({
-            ...prevState,
-            [fieldName]: value
+        console.log(`Updating ${fieldName} to ${value}`); // Log to check value
+        setUser((prevUser) => ({
+            ...prevUser,
+            [fieldName]: value, // Update the specific field
         }));
     };
+    const [loading, setLoading] = useState(false);
+    const handleSave = async () => {
+        setLoading(true)
+        await userStore.updateUserProfile(user);
+        setLoading(false)
+        navigate('/darshan');
+    };
+
+    console.log("user : ", user);
 
     return (
         <div className="modal-wrapper" style={{ height: '100vh' }}>
-            <div className="profile-background">
-
+            <div className="profile-background" style={{ backgroundImage: `url(${rangoliBackground})` }}>
                 <div className="profile-container">
                     <div className="profile-scroll">
                         <p className="profile-info-text">
                             We will protect your info and will not share it with any 3rd party!
                         </p>
-                        <InputFields fieldName='name' inputTitle='Name' updateField={updateUserProfile} value={user.name} />
+                        <InputFields
+                            fieldName='fullName'  // Ensure this matches the user object key
+                            inputTitle='Name'
+                            updateField={updateUserProfile}
+                            value={user.fullName}  // Ensure this is correct
+                            isEditable={true} // Editable
+                        />
                         <InputFields
                             fieldName='phoneNumber'
                             inputTitle='Mobile Number'
                             updateField={updateUserProfile}
                             value={user.phoneNumber?.toString()}
-                            isEditable={false}
+                            isEditable={false} // Editable
                         />
                         <button
                             className="delete-account-btn"
@@ -51,18 +66,20 @@ const Profile = observer(() => {
                     </div>
 
                     <button
-                        className="custom-button"
-                        onClick={() => userStore.saveUserProfile(user)}
+                        className="custom-button dfjc"
+                        onClick={handleSave}
                     >
-                        Save Changes
+                        {loading ?
+                            <ActivityIndicator color="white" /> : ''
+                        } Save Changes
                     </button>
                     <button
                         className="custom-button"
                         style={{ border: '1px solid #FF4500', backgroundColor: 'transparent' }}
                         onClick={() => {
-                            console.log("button cliecked");
+                            console.log("button clicked");
                             buttonStore.setSelectedButton(ButtonType.LogOut);
-                            console.log("buttonStore.selectedButton:", buttonStore.selectedButton)
+                            console.log("buttonStore.selectedButton:", buttonStore.selectedButton);
                         }}
                     >
                         Logout
@@ -103,8 +120,7 @@ const Profile = observer(() => {
 
                 </div>
             </div>
-        </div >
+        </div>
     );
-}
-)
+});
 export default Profile;

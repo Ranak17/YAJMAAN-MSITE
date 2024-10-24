@@ -5,6 +5,7 @@ import { ImageBackground } from "react-native"; // You can replace this with a r
 // import LoadingScreen from "./LoadingScreen"; // Make sure this is compatible with React
 import { store } from '../stores/store'; // Assuming your store is set up properly
 import { RiArrowRightSLine } from "react-icons/ri";
+import rangoliBackground from '../assets/images/rangoli-background.png'
 import '../styles/ordersStyle.css'
 const Orders = () => {
     const [orders, setOrders] = useState([]);
@@ -65,7 +66,7 @@ const Orders = () => {
             style={{
                 flex: 1,
                 backgroundColor: '#160c00',
-                backgroundImage: `url('../../assets/images/rangoli-background.png')`,
+                backgroundImage: `url(${rangoliBackground})`,
                 backgroundSize: 'cover',
                 padding: '10px',
                 color: 'white'
