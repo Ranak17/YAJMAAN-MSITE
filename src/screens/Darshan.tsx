@@ -75,8 +75,8 @@ const Darshan = observer(() => {
     const fetchVideos = async (filter) => {
         console.log("fetching stories with filter : ", filter);
         try {
-            //const response = await fetch('http://13.53.229.65:3000/api/darshan/videos', {   //http
-            const response = await fetch('https://yajmaan.in:4433/api/darshan/videos', {   //https
+            const response = await fetch('http://13.53.229.65:3000/api/darshan/videos', {   //http
+                // const response = await fetch('https://yajmaan.in:4433/api/darshan/videos', {   //https
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -161,6 +161,12 @@ const Darshan = observer(() => {
     const [mute, setMute] = useState<boolean>(true);
 
     console.log("mute : ", mute)
+    const [play, setPlay] = useState<boolean>(true); // Video plays by default
+
+    const togglePlay = () => {
+        setPlay(prevPlay => !prevPlay); // Toggle between play and pause
+    };
+
     return (
         <div style={{ backgroundColor: '#261602' }}>
             <Header />
@@ -171,7 +177,7 @@ const Darshan = observer(() => {
                 <div className="video-list">
                     {videos.map((video, index) => (
                         <div key={index} className="video-item">
-                            <VideoPlayer videoUrl={video.videoUrl} mute={mute} />
+                            <VideoPlayer videoUrl={video.videoUrl} mute={mute} play={play} togglePlay={togglePlay} />
                             <div className="video-info">
                                 <div className="video-info-1">
                                     <div className='video-title'>
@@ -233,7 +239,10 @@ const Darshan = observer(() => {
                                     <img src="./images/dakshana.png" alt="dakshana" />
                                 </div>
                             </div>
-
+                            {/* Show play icon when paused */}
+                            <div id="play-video-icon">
+                                {!play && <IoPlayCircleOutline />}
+                            </div>
                         </div>
                     ))}
                 </div>

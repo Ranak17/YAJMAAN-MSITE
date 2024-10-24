@@ -2,15 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import '../styles/globalstyle.css';
 import { IoPlayCircleOutline } from 'react-icons/io5';
 
-function VideoPlayer({ videoUrl, mute }) {
+function VideoPlayer({ videoUrl, mute, play, togglePlay }) {
     const videoRef = useRef(null);
-    const [play, setPlay] = useState<boolean>(true);
-    const togglePlay = () => {
-        setPlay(!play);
-    };
+
     useEffect(() => {
         if (videoRef.current) {
-            // Play or pause based on the 'play' prop
+            // Play or pause based on the 'play' state
             if (play) {
                 videoRef.current.play().catch((error) => {
                     if (error.name !== 'AbortError') {
@@ -22,25 +19,27 @@ function VideoPlayer({ videoUrl, mute }) {
             }
         }
     }, [play]);
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (videoRef.current) {
                         if (entry.isIntersecting) {
-                            // Try to play the video, catching potential AbortError
+                            setPlay(true); // Automatically play when in view
                             videoRef.current.play().catch((error) => {
                                 if (error.name !== 'AbortError') {
                                     console.error("Failed to play video:", error);
                                 }
                             });
                         } else {
+                            setPlay(false); // Pause when out of view
                             videoRef.current.pause();
                         }
                     }
                 });
             },
-            { threshold: 0.7 }
+            { threshold: 0.7 } // Play when 70% of the video is in view
         );
 
         if (videoRef.current) {
@@ -65,13 +64,7 @@ function VideoPlayer({ videoUrl, mute }) {
                 className="reel-video"
                 style={{ width: '100%', height: '100%' }}
             />
-            <div id='play-video-icon'>
-                {!play
-                    ? <IoPlayCircleOutline />
-                    : ''
-                }
 
-            </div>
         </div>
     );
 }
